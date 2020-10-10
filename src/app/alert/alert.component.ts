@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core"; 
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { VoiceRecognitionService } from "../voice-recognition/service/voice-reconition.service";
+import { HttpCallsBackendService } from "./http-calls-backend.service";
+import { compilePipeFromMetadata } from "@angular/compiler";
 
 @Component({
   selector: "app-alert",
@@ -12,64 +14,64 @@ export class AlertComponent implements OnInit {
   typeNotif: String[] = ["Aggression", "Disaster", "Accident"];
   icons: String[][] = [
     ["fas fa-fist-raised", "fas fa-fire", "fas fa-car-crash"],
-    []
+    [],
   ];
 
   agressions: String[] = ["Robbery", "Sexual", "Fight"];
 
   catastrofs: String[] = ["Fire", "Earthquake", "Wind"];
 
-  accidents: String[] = ["Voiture", "Bike"]; 
+  accidents: String[] = ["Voiture", "Bike"];
 
   typeNotifSelected: number;
   typeNotifSelectedTwo: number;
   nameTypeOneSelected: String;
   nameTypeTwoSelected: String;
   typeNotifSecond: String[];
-  checkoutForm; 
+  checkoutForm;
 
-  isLocationActive : boolean = false;
-  latitude : number;
-  longitude : number;
+  isLocationActive: boolean = false;
+  latitude: number;
+  longitude: number;
 
+  constructor(
+    private formBuilder: FormBuilder,
+    private modalService: NgbModal,
+    public service: VoiceRecognitionService,
+    private serviceBackend : HttpCallsBackendService
+  ) {
+    this.checkoutForm = this.formBuilder.group({
+      text: "",
+    });
 
-  constructor(private formBuilder: FormBuilder, private modalService: NgbModal,
-    public service : VoiceRecognitionService) {
-      this.checkoutForm = this.formBuilder.group({
-        text: '' 
-      });
-        
-    this.service.init(); 
-    }
-    recoverVoice(){ 
-      this.service.isStoppedSpeechRecog ? this.service.start() : this.service.stop();
-    }
-    startService(){
-      this.service.start()
-    }
-  
-    stopService(){
-      this.service.stop()
-    }
-  
-  onSubmit(notification) {
+    this.service.init();
+  }
+  recoverVoice() {
+    this.service.isStoppedSpeechRecog
+      ? this.service.start()
+      : this.service.stop();
+  }
+  startService() {
+    this.service.start();
   }
 
-  
+  stopService() {
+    this.service.stop();
+  }
+
+  onSubmit(notification) {}
+
   ngOnInit(): void {
-
     if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(position => {
-         console.log(position)
-         this.isLocationActive=true;
-         this.latitude = position.coords.latitude;
-         this.longitude = position.coords.longitude;
-         console.log(this.latitude)
-         console.log(this.longitude)
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log(position);
+        this.isLocationActive = true;
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        console.log(this.latitude);
+        console.log(this.longitude);
       });
-
     }
-
   }
 
   onClickTypeNotif(event, index) {
@@ -77,9 +79,9 @@ export class AlertComponent implements OnInit {
       this.typeNotifSelected == undefined ||
       this.typeNotifSelected != index
     ) {
-      this.typeNotifSelected = index; 
+      this.typeNotifSelected = index;
       this.nameTypeOneSelected = this.typeNotif[index];
-      console.log("sel : "+ this.nameTypeOneSelected)
+      console.log("sel : " + this.nameTypeOneSelected);
       switch (this.typeNotifSelected) {
         case 0:
           this.typeNotifSecond = this.agressions;
@@ -96,7 +98,7 @@ export class AlertComponent implements OnInit {
       this.typeNotifSecond = undefined;
       this.nameTypeOneSelected = undefined;
     }
-    this.typeNotifSelectedTwo = undefined; 
+    this.typeNotifSelectedTwo = undefined;
     this.nameTypeTwoSelected = undefined;
   }
 
@@ -104,11 +106,10 @@ export class AlertComponent implements OnInit {
     if (
       this.typeNotifSelectedTwo == undefined ||
       this.typeNotifSelectedTwo != index
-    ) { 
+    ) {
       this.typeNotifSelectedTwo = index;
       this.nameTypeTwoSelected = this.typeNotifSecond[index];
-      console.log("sel : "+ this.nameTypeOneSelected)
-      
+      console.log("sel : " + this.nameTypeOneSelected);
     } else {
       this.typeNotifSelectedTwo = undefined;
       this.nameTypeTwoSelected = undefined;
@@ -118,38 +119,62 @@ export class AlertComponent implements OnInit {
   isTypeNotifSelected(i, board): boolean {
     if (board == 1) return i == this.typeNotifSelected;
     else {
-      return i!=undefined &&  i == this.typeNotifSelectedTwo;
+      return i != undefined && i == this.typeNotifSelectedTwo;
     }
   }
 
-  getFaticon(i,j){
+  getFaticon(i, j) {
     return this.icons[i][j];
   }
 
-
-  hasAtLeastOne(){
-    return !this.isLocationActive || (!this.service.text && !this.nameTypeOneSelected );
+  hasAtLeastOne() {
+    return (
+      !this.isLocationActive ||
+      (!this.service.text && !this.nameTypeOneSelected)
+    );
   }
-
 
   open(content) {
-    console.log(content)
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-    }, (reason) => {
-      if(reason=="OK"){
-        this.sentAlert()
-      }
-    });
+    this.service.stop();
+    this.modalService
+      .open(content, { ariaLabelledBy: "modal-basic-title" })
+      .result.then(
+        (result) => {},
+        (reason) => {
+          if (reason == "OK") {
+            this.sentAlert();
+          }
+        }
+      );
+  }
+ 
 
+  private sentAlert() {
+    let type = this.nameTypeTwoSelected
+      ? this.nameTypeOneSelected + "" + this.nameTypeTwoSelected
+      : this.nameTypeOneSelected;
+    let currentDate = new Date();
+    let jsonBody = {
+      type: type,
+      message: this.service.text,
+      lat: this.latitude,
+      lon: this.longitude,
+      signaled_by: "", //TODO
+      start_date: currentDate,
+      end_date: currentDate,
+    };
+    this.serviceBackend.postAlert(jsonBody);
+    this.clearData();
   }
 
-  private sentAlert(){
-    this.latitude;
-    this.longitude;
-    this.service.text;
-    this.nameTypeOneSelected;
-    this.nameTypeTwoSelected;
-    var currentDate = new Date();
-    console.log("currentDate " + currentDate)
+  private clearData(){
+    this.typeNotifSelected=undefined;
+    this.typeNotifSelectedTwo=undefined;
+    this.latitude=undefined;
+    this.longitude=undefined;
+    this.service.text=undefined;
+    this.nameTypeOneSelected=undefined;
+    this.nameTypeTwoSelected=undefined;
+    this.typeNotifSecond=undefined;
   }
 }
