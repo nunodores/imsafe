@@ -1,0 +1,82 @@
+<main class="profile-page">
+  <section class="section-profile-cover section-shaped my-0">
+    <!-- Circles background -->
+    <div class="shape shape-style-1 shape-primary alpha-4">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <!-- SVG separator -->
+
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="card card-profile shadow mt--300" style="margin-bottom: 60px;">
+
+        <div id="map" class="map-container"> </div>
+
+      </div>
+
+      <div style="padding-top: 20px; " *ngFor="let alert of Alerts; let i = index">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+
+
+              <div id="animation-card" class="card shadow" style="width: 100%; border-radius: 15px;">
+                <div class="container" style="width: 100%; padding: 10px;">
+                  <div class="row">
+                    <div class="col">
+                      <div style="display: grid;">
+                        <span class="mr-auto p-2">{{alert.message}}</span>
+                        <span class="mr-auto p-2">{{alert.type}}</span>
+                        <span class="mr-auto p-2" style="opacity: 0.4; font-style: italic;">Send {{alert.last_update}}s
+                          ago</span>
+
+                      </div>
+
+
+                    </div>
+                    <div class="col">
+
+                      <span class="p-2" style="opacity: 0.4; padding-right: 5px; "> {{alert.lat}},{{alert.long}}</span>
+
+                      <a href="javascript:void(0)">
+
+                        <img src="../../assets/img/icons/common/maps-and-flags.png" class="location-icon p-2" />
+                      </a>
+                    </div>
+
+
+
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-auto"
+              style="display:flex; align-items: center; flex-direction: row;  flex-wrap: wrap; position: relative; justify-content: center;">
+              <a href="javascript:void(0)">
+
+                <img src="../../assets/img/icons/common/like.png" class="icons-to-animate" />
+              </a>
+
+              <a href="javascript:void(0)">
+
+                <img src="../../assets/img/icons/common/dislike.png" class="icons-to-animate" />
+              </a>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>

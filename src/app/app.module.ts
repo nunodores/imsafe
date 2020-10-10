@@ -15,6 +15,9 @@ import { FooterComponent } from './shared/footer/footer.component';
 
 import { HomeModule } from './home/home.module';
 import { LoginComponent } from './login/login.component';
+import { AlertDetailsComponent } from './alert-details/alert-details.component';
+import { GoogleChartsModule } from 'angular-google-charts';
+import { HttpClientModule, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,13 +27,16 @@ import { LoginComponent } from './login/login.component';
     ProfileComponent,
     NavbarComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
+    AlertDetailsComponent
   ],
   imports: [
     BrowserModule,
     NgbModule,
     FormsModule,
     RouterModule,
+    GoogleChartsModule.forRoot(),
+    HttpClientModule,
     AppRoutingModule,
     HomeModule
   ],
