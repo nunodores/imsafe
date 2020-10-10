@@ -24,18 +24,25 @@ export class UserApiService {
     login(login: string, password: string) {
         return this.http.post<{ token: string, _id: string }>('http://localhost:9000/users/login/', { login, password }).pipe(tap(res => {
             localStorage.setItem('access_token', res.token);
-            localStorage.setItem('_id', res._id);
+            localStorage.setItem('login', login);
         }))
     }
 
     logout() {
         localStorage.removeItem('access_token');
-        localStorage.removeItem('_id');
+        localStorage.removeItem('login');
       }
 
       public get loggedIn(): boolean{
         return localStorage.getItem('access_token') !==  null;
       }
+
+    
+    // get a user by login
+    getUser(login: string): Observable<User> {
+        let url = `${this.baseUri}users/${login}`;
+        return this.http.get<User>(url);
+    }
 
     
 

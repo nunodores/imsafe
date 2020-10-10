@@ -25,6 +25,6 @@ export interface Assessment {
     _id?: string;
     user_uuid?: string;
     alert_id?: string;
-    is_real?: boolean;
+    is_real?: string;
     last_update?: Date;
 }
