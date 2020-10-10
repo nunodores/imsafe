@@ -55,15 +55,144 @@
             <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{this.user.email}}</div>
           </div>
           <div class="mt-5 py-5 border-top text-center">
-            <div class="row justify-content-center">
-              <div class="col-lg-9">
-                <p>An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.</p>
-                <a href="javascript:void(0)">Show more</a>
+            <div style="padding-top: 20px; " *ngFor="let alert of alerts; let i = index">
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <div id="animation-card" class="card shadow" style="width: 100%; border-radius: 15px;" (click)="open(mymodal,alert)">
+                      <div class="container" style="width: 100%; padding: 10px;">
+                        <div class="row">
+                          <div class="col">
+                            <div style="display: grid;">
+                              <span class="mr-auto p-2">{{alert.message}}</span>
+                              <span class="mr-auto p-2">{{alert.type}}</span>
+                              <span class="mr-auto p-2" style="opacity: 0.4; font-style: italic;">Sent {{alert.last_update}}s
+                                ago</span>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <span class="p-2" style="opacity: 0.4; padding-right: 5px; "> {{alert.lat}},{{alert.lon}}</span>
+                            <a href="javascript:void(0)">
+                              <img src="../../assets/img/icons/common/maps-and-flags.png" class="location-icon p-2" />
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-auto"
+                    style="display:flex; align-items: center; flex-direction: row;  flex-wrap: wrap; position: relative; justify-content: center;">
+                    <a href="javascript:void(0)">
+                      <img src="../../assets/img/icons/common/delete.png" class="icons-to-animate" />
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- MODAL -->
+      <ng-template #mymodal let-modal>
+        <form [formGroup]="checkoutForm"
+          (ngSubmit)="onSubmit(checkoutForm.value)">
+          <div class="modal-header">
+            <div class="modal-title">
+              <h3>
+                <span class="badge badge-primary">
+                  Edit your alert
+                </span>
+              </h3>
+            </div>
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div *ngIf="selectedAlert.message !== null" class="form-group">
+              <div class="d-flex">
+                <h3 class="mr-auto p-2">
+                  <span class="badge badge-primary">
+                    What's happening?</span
+                  >
+                </h3>
+                <div class="p-2">
+                  <button
+                    class="recorder btn"
+                    [ngClass]="
+                      service.isStoppedSpeechRecog
+                        ? 'btn-info'
+                        : 'btn-danger'
+                    "
+                    (click)="recoverVoice()"
+                  >
+                    <i class="fa fa-microphone"></i>
+                  </button>
+                </div>
+              </div>
+              <textarea
+                class="form-control"
+                rows="3"
+                formControlName="text"
+                style="resize: none"
+                [(ngModel)]="service.text ? service.text : selectedAlert.message"></textarea>
+            </div>
+
+            <div *ngIf="selectedAlert.type !== null" class="form-group">
+              <!-- Button First level -->
+              <div class="text-center" style="margin: 10px">
+                <button
+                  *ngFor="let incident of typeNotif; let i = index"
+                  type="button"
+                  style="margin-bottom: 5px"
+                  class="btn btn-warning"
+                  (click)="onClickTypeNotif($event, i)"
+                  [ngClass]="
+                    isTypeNotifSelected(i, 1) ? 'disable' : 'enable'
+                  "
+                >
+                  <i [ngClass]="getFaticon(0, i)"> </i>
+                  {{ incident }}
+                </button>
+              </div>
+              <!-- button second level -->
+              <div class="text-center" style="margin: 10px">
+                <button
+                  *ngFor="let incidentTwo of typeNotifSecond; let i = index"
+                  type="button"
+                  class="btn btn-info"
+                  style="margin-bottom: 5px"
+                  (click)="onClickTypeNotifTwo($event, i)"
+                  [ngClass]="
+                    isTypeNotifSelected(i, 2) ? 'disable' : 'enable'
+                  "
+                >
+                  {{ incidentTwo }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              (click)="modal.close('KO')"
+            >
+              Cancel
+            </button>
+            <button type="submit"
+              class="btn btn-outline-success"
+              (click)="modal.dismiss('OK')">
+              Valid
+            </button>
+          </div>
+        </form>
+      </ng-template> 
     </div>
   </section>
 </main>

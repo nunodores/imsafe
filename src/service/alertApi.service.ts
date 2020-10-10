@@ -9,8 +9,8 @@ import { Alert } from '../models/interfaces'
 })
 
 export class AlertApiService {
-  baseUri:string = 'http://resastyle.com:9000/';
-  //baseUri:string = 'http://localhost:9000/';
+  //baseUri:string = 'http://resastyle.com:9000/';
+  baseUri:string = 'http://localhost:9000/';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private http: HttpClient) { }
@@ -30,9 +30,12 @@ export class AlertApiService {
   }
 
   // Update Alerts
-  updateEmployee(id, data): Observable<any> {
+  updateAlert(id, data): Observable<any> {
     let url = `${this.baseUri}alerts/${id}`;
-    return this.http.put(url, data, { headers: this.headers }).pipe(
+    return this.http.put(url, data, {headers: {'Content-Type': 'application/json; charset=UTF-8',
+        'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Z-Key'}}).pipe(
       catchError(this.errorMgmt)
     )
   }
