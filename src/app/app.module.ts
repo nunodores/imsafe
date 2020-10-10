@@ -15,11 +15,18 @@ import { FooterComponent } from './shared/footer/footer.component';
 
 import { HomeModule } from './home/home.module';
 import { LoginComponent } from './login/login.component';
+
 import { AlertComponent } from './alert/alert.component';
 import { ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { VoiceRecognitionComponent } from './voice-recognition/voice-recognition.component';
+import { AlertDetailsComponent } from './alert-details/alert-details.component';
+import { GoogleChartsModule } from 'angular-google-charts';
+import { HttpClientModule, HttpHeaders, HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +37,8 @@ import { VoiceRecognitionComponent } from './voice-recognition/voice-recognition
     FooterComponent,
     LoginComponent,
     AlertComponent,
-    VoiceRecognitionComponent
+    VoiceRecognitionComponent,
+    AlertDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +46,14 @@ import { VoiceRecognitionComponent } from './voice-recognition/voice-recognition
     FormsModule,   
     ReactiveFormsModule,
     RouterModule,
+    GoogleChartsModule.forRoot(),
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: function  tokenGetter() {
+             return     localStorage.getItem('access_token');}
+      }
+    }),
     AppRoutingModule,
     HomeModule,
     HttpClientModule,

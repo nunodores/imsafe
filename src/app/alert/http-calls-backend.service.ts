@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ModalConfirmationComponent } from './modal-confirmation/modal-confirmation.component';
 @Injectable({
   providedIn: 'root'
 })

@@ -13,7 +13,7 @@ import { compilePipeFromMetadata } from "@angular/compiler";
 export class AlertComponent implements OnInit {
   typeNotif: String[] = ["Aggression", "Disaster", "Accident"];
   icons: String[][] = [
-    ["fas fa-fist-raised", "fas fa-fire", "fas fa-car-crash"],
+    ["fa fa-hand-rock-o", "fa fa-fire-extinguisher", "fa fa-car"],
     [],
   ];
 
@@ -151,7 +151,7 @@ export class AlertComponent implements OnInit {
 
   private sentAlert() {
     let type = this.nameTypeTwoSelected
-      ? this.nameTypeOneSelected + "" + this.nameTypeTwoSelected
+      ? this.nameTypeOneSelected + " - " + this.nameTypeTwoSelected
       : this.nameTypeOneSelected;
     let currentDate = new Date();
     let jsonBody = {

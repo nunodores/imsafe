@@ -9,6 +9,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { AlertComponent } from './alert/alert.component';
+import { AlertDetailsComponent } from './alert-details/alert-details.component';
 
 const routes: Routes =[
     { path: 'home',             component: HomeComponent },
@@ -17,7 +18,8 @@ const routes: Routes =[
     { path: 'landing',          component: LandingComponent },
     { path: 'login',          component: LoginComponent },
     { path: 'alert',          component: AlertComponent },
-    { path: '', redirectTo: 'alert', pathMatch: 'full' }
+    { path: 'alertDetails',   component: AlertDetailsComponent},
+    { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 
 @NgModule({
