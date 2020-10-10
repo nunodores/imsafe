@@ -48,6 +48,7 @@ import { JwtModule } from '@auth0/angular-jwt';
     RouterModule,
     GoogleChartsModule.forRoot(),
     HttpClientModule,
+    ReactiveFormsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() {
