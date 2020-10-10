@@ -67,12 +67,15 @@
             <i class="ni ni-collection d-lg-none"></i>
             <span class="nav-link-inner--text">Examples</span>
           </a>
-          <div class="dropdown-menu">
+          <div *ngIf="isLoggedIn" class="dropdown-menu">
             <a [routerLink]="['/landing']" class="dropdown-item">Landing</a>
             <a [routerLink]="['/user-profile']" class="dropdown-item">Profile</a>
+            <a [routerLink]="['/alertDetails']" class="dropdown-item">Alert Details</a>
+            <a [routerLink]="['/login']" class="dropdown-item">Logout</a>
+          </div>
+          <div *ngIf="!isLoggedIn" class="dropdown-menu">
             <a [routerLink]="['/login']" class="dropdown-item">Login</a>
             <a [routerLink]="['/register']" class="dropdown-item">Register</a>
-            <a [routerLink]="['/alertDetails']" class="dropdown-item">Alert Details</a>
           </div>
         </li>
       </ul>

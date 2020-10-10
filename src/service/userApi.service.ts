@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { User } from '../models/interfaces'
 
 @Injectable({
     providedIn: 'root'
@@ -14,14 +15,14 @@ export class UserApiService {
 
     constructor(private http: HttpClient) { }
 
-    register(email:string, password:string) {
-        return this.http.post<{token: string}>('http://localhost:9000/users/register/', {email, password}).pipe(tap(res => {
-        this.login(email, password)
-    }))
+    register(user: User) {
+        return this.http.post<{token: string}>('http://localhost:9000/users/register/', user).pipe(tap(res => {
+            this.login(user.login, user.password)
+        }))
     }
 
-    login(email: string, password: string) {
-        return this.http.post<{ token: string, _id: string }>('http://localhost:9000/users/login/', { email, password }).pipe(tap(res => {
+    login(login: string, password: string) {
+        return this.http.post<{ token: string, _id: string }>('http://localhost:9000/users/login/', { login, password }).pipe(tap(res => {
             localStorage.setItem('access_token', res.token);
             localStorage.setItem('_id', res._id);
         }))

@@ -19,6 +19,7 @@ import { AlertDetailsComponent } from './alert-details/alert-details.component';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { HttpClientModule, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { JwtModule } from '@auth0/angular-jwt';
     RouterModule,
     GoogleChartsModule.forRoot(),
     HttpClientModule,
+    ReactiveFormsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() {
