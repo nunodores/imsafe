@@ -16,7 +16,8 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { HomeModule } from './home/home.module';
 import { LoginComponent } from './login/login.component';
 import { AlertComponent } from './alert/alert.component';
-import { ReactiveFormsModule} from '@angular/forms' 
+import { ReactiveFormsModule} from '@angular/forms';
+import { VoiceRecognitionComponent } from './voice-recognition/voice-recognition.component' 
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,8 @@ import { ReactiveFormsModule} from '@angular/forms'
     NavbarComponent,
     FooterComponent,
     LoginComponent,
-    AlertComponent
+    AlertComponent,
+    VoiceRecognitionComponent
   ],
   imports: [
     BrowserModule,

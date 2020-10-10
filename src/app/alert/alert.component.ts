@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core"; 
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core"; 
 import { FormBuilder } from "@angular/forms";
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { VoiceRecognitionService } from "../voice-recognition/service/voice-reconition.service";
 
 @Component({
   selector: "app-alert",
@@ -28,17 +29,28 @@ export class AlertComponent implements OnInit {
   checkoutForm;
   textAlert: String;
 
-  constructor(private formBuilder: FormBuilder, private modalService: NgbModal) {
+  constructor(private formBuilder: FormBuilder, private modalService: NgbModal,
+    public service : VoiceRecognitionService) {
       this.checkoutForm = this.formBuilder.group({
         text: '' 
       });
-
-
+        
+    this.service.init();
+    this.textAlert=this.service.text
     }
-
+    recoverVoice(){ 
+      this.service.isStoppedSpeechRecog ? this.service.start() : this.service.stop();
+    }
+    startService(){
+      this.service.start()
+    }
+  
+    stopService(){
+      this.service.stop()
+    }
+  
   onSubmit(notification) {
-    // Open modal here
-    //this.textAlert = notification.text; 
+    // Open modal here 
     console.log('Type: ' + this.nameTypeOneSelected);
     console.log(this.nameTypeTwoSelected? ' - ' + this.nameTypeTwoSelected : ''); 
   }
@@ -101,8 +113,7 @@ export class AlertComponent implements OnInit {
 
 
   hasAtLeastOne(){
-    console.log(!this.textAlert && !this.nameTypeOneSelected)
-    return !this.textAlert && !this.nameTypeOneSelected;
+    return !this.service.text && !this.nameTypeOneSelected;
   }
 
 
