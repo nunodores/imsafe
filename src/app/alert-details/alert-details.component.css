@@ -31,3 +31,8 @@
   background-color:  #8965e0;
   color: white;
 }
+
+.breadcrumb {
+  background-image: url("/assets/img/icons/common/maps-and-flags.png"); 
+  z-index:999;
+}
