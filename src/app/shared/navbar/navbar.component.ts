@@ -14,6 +14,9 @@ export class NavbarComponent implements OnInit {
     isLoggedIn: boolean;
 
     constructor(public location: Location, private router: Router) {
+        router.events.subscribe((val) => {
+            this.isLoggedIn = localStorage.getItem('access_token') !== null;
+        });
     }
 
     ngOnInit() {
@@ -32,7 +35,6 @@ export class NavbarComponent implements OnInit {
        }
      });
      this.location.subscribe((ev:PopStateEvent) => {
-        this.isLoggedIn = localStorage.getItem('access_token') !== null;
          this.lastPoppedUrl = ev.url;
      });
     }
