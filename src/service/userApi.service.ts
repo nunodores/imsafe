@@ -44,8 +44,6 @@ export class UserApiService {
         return this.http.get<User>(url);
     }
 
-    
-
     // Error handling 
     errorMgmt(error: HttpErrorResponse) {
         let errorMessage = '';

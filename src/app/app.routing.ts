@@ -10,6 +10,7 @@ import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { AlertDetailsComponent } from './alert-details/alert-details.component';
 import { AuthService } from '../service/auth.service'
+import { AlertComponent } from './alert/alert.component';
 
 const routes: Routes =[
     { path: 'home',             component: HomeComponent },
@@ -18,6 +19,7 @@ const routes: Routes =[
     { path: 'landing',          component: LandingComponent, canActivate: [AuthService] },
     { path: 'login',          component: LoginComponent },
     { path: 'alertDetails',   component: AlertDetailsComponent, canActivate: [AuthService] },
+    { path: 'alert',          component: AlertComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

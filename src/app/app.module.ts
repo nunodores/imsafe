@@ -15,11 +15,17 @@ import { FooterComponent } from './shared/footer/footer.component';
 
 import { HomeModule } from './home/home.module';
 import { LoginComponent } from './login/login.component';
+
+import { AlertComponent } from './alert/alert.component';
+import { ReactiveFormsModule} from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { VoiceRecognitionComponent } from './voice-recognition/voice-recognition.component';
 import { AlertDetailsComponent } from './alert-details/alert-details.component';
 import { GoogleChartsModule } from 'angular-google-charts';
-import { HttpClientModule, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClientModule, HttpHeaders, HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
-import { ReactiveFormsModule } from '@angular/forms';
+
+
 
 @NgModule({
   declarations: [
@@ -30,12 +36,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     NavbarComponent,
     FooterComponent,
     LoginComponent,
+    AlertComponent,
+    VoiceRecognitionComponent,
     AlertDetailsComponent
   ],
   imports: [
     BrowserModule,
     NgbModule,
-    FormsModule,
+    FormsModule,   
+    ReactiveFormsModule,
     RouterModule,
     GoogleChartsModule.forRoot(),
     HttpClientModule,
@@ -47,9 +56,11 @@ import { ReactiveFormsModule } from '@angular/forms';
       }
     }),
     AppRoutingModule,
-    HomeModule
+    HomeModule,
+    HttpClientModule,
+    HttpModule
   ],
-  providers: [],
+  providers: [HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,6 +7,12 @@
           [attr.aria-expanded]="!isCollapsed" aria-controls="navbar_global">
       <span class="navbar-toggler-icon"></span>
     </button>
+    <a [routerLink]="['/alert']" class="btn btn-danger btn-icon">
+      <span class="btn-inner--icon">
+        <i class="fa fa-exclamation-triangle mr-2"></i>
+      </span>
+      <span class="nav-link-inner--text">Alert</span>
+    </a>
     <div class="navbar-collapse collapse" id="navbar_global" [ngbCollapse]="isCollapsed">
       <div class="navbar-collapse-header">
         <div class="row">
@@ -104,7 +110,6 @@
             <span class="nav-link-inner--text d-lg-none">Github</span>
           </a>
         </li>
-
       </ul>
     </div>
     <a href="https://www.creative-tim.com/product/argon-design-system-angular?ref=adsa-navbar" target="_blank" class="btn btn-neutral btn-icon">

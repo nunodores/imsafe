@@ -1,0 +1,17 @@
+.disable { 
+    opacity: 0.6;
+}
+.enable { 
+    opacity: 1;
+}
+
+.recorder{ 
+    border-radius: 30%;
+    font-size: x-large;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+ 
+ 
