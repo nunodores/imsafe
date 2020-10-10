@@ -1,0 +1,135 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+/>
+
+<main>
+  <div class="position-relative">
+    <!-- Hero for FREE version -->
+    <section class="section section-lg section-hero section-shaped">
+      <!-- Background circles -->
+      <div class="shape shape-style-1 shape-primary alpha-4">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <app-sections>
+        <div class="container">
+          <div class="card card-profile shadow" style="padding: 5%">
+            <div class="col-sm-12">
+              <form
+                [formGroup]="checkoutForm"
+                (ngSubmit)="onSubmit(checkoutForm.value)"
+              >
+                <div class="form-group">
+                  <h3>
+                    <span class="badge badge-primary"> What's happening?</span>
+                  </h3>
+
+                  <textarea
+                    class="form-control"
+                    rows="3"
+                    formControlName="text"
+                    [(ngModel)]="textAlert"
+                  ></textarea>
+                </div>
+                <div class="form-group">
+                  <h3><span class="badge badge-primary">Type Alert</span></h3>
+                  <!-- Button First level -->
+                  <div class="text-center" style="margin: 10px">
+                    <button
+                      *ngFor="let incident of typeNotif; let i = index"
+                      type="button"
+                      class="btn btn-warning"
+                      (click)="onClickTypeNotif($event, i)"
+                      [ngClass]="
+                        isTypeNotifSelected(i, 1) ? 'disable' : 'enable'
+                      "
+                    >
+                      <i [ngClass]="getFaticon(0, i)"> </i>
+                      {{ incident }}
+                    </button>
+                  </div>
+                  <!-- button second level -->
+                  <div class="text-center" style="margin: 10px">
+                    <button
+                      *ngFor="let incidentTwo of typeNotifSecond; let i = index"
+                      type="button"
+                      class="btn btn-info"
+                      (click)="onClickTypeNotifTwo($event, i)"
+                      [ngClass]="
+                        isTypeNotifSelected(i, 2) ? 'disable' : 'enable'
+                      "
+                    >
+                      {{ incidentTwo }}
+                    </button>
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  (click)="open(mymodal)"
+                  [disabled]="hasAtLeastOne()"
+                >
+                  Notify alert
+                </button>
+
+                <!-- MODAL -->
+                <ng-template #mymodal let-modal>
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title">ALERT</h4>
+
+                    <button
+                      type="button"
+                      class="close"
+                      aria-label="Close"
+                      (click)="modal.dismiss('Cross click')"
+                    >
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+
+                  <div class="modal-body">
+                    <div *ngIf="textAlert">
+                      <p class="font-weight-bold">What's happenning ?</p>
+                      <pem class="font-italic">{{ textAlert }}</pem>
+                    </div>
+
+                    <div *ngIf="nameTypeOneSelected">
+                      <p class="font-weight-bold">Type of alert</p>
+                      <p class="font-italic">{{ nameTypeOneSelected }}</p>
+                      <p class="font-italic" *ngIf="nameTypeTwoSelected">
+                        {{ nameTypeTwoSelected }}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger"
+                      (click)="modal.close('KO')"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-success"
+                      (click)="modal.dismiss('cancel button')"
+                    >
+                      Valid
+                    </button>
+                  </div>
+                </ng-template>
+              </form>
+            </div>
+          </div>
+        </div>
+      </app-sections>
+    </section>
+  </div>
+</main>

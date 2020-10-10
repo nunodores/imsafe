@@ -15,7 +15,8 @@ import { FooterComponent } from './shared/footer/footer.component';
 
 import { HomeModule } from './home/home.module';
 import { LoginComponent } from './login/login.component';
-
+import { AlertComponent } from './alert/alert.component';
+import { ReactiveFormsModule} from '@angular/forms' 
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,12 +25,14 @@ import { LoginComponent } from './login/login.component';
     ProfileComponent,
     NavbarComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
     NgbModule,
-    FormsModule,
+    FormsModule,   
+    ReactiveFormsModule,
     RouterModule,
     AppRoutingModule,
     HomeModule
