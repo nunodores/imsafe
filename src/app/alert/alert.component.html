@@ -33,32 +33,34 @@
                       >
                     </h3>
                     <div class="p-2">
-                    <button
-                      class="recorder btn "
-                      [ngClass]="
-                        service.isStoppedSpeechRecog ? 'btn-info' : 'btn-danger'
-                      "
-                      (click)="recoverVoice()"
-                    >
-                      <i class="fas fa-microphone"></i>
-                    </button>
-                     </div>
+                      <button
+                        class="recorder btn"
+                        [ngClass]="
+                          service.isStoppedSpeechRecog
+                            ? 'btn-info'
+                            : 'btn-danger'
+                        "
+                        (click)="recoverVoice()"
+                      >
+                        <i class="fas fa-microphone"></i>
+                      </button>
+                    </div>
                   </div>
                   <textarea
                     class="form-control"
                     rows="3"
                     formControlName="text"
-                    style="resize: none;"
+                    style="resize: none"
                     [(ngModel)]="service.text"
                   ></textarea>
                 </div>
                 <div class="form-group">
-                   <!-- Button First level -->
+                  <!-- Button First level -->
                   <div class="text-center" style="margin: 10px">
                     <button
                       *ngFor="let incident of typeNotif; let i = index"
                       type="button"
-                      style="margin-bottom: 5px;"
+                      style="margin-bottom: 5px"
                       class="btn btn-warning"
                       (click)="onClickTypeNotif($event, i)"
                       [ngClass]="
@@ -75,7 +77,7 @@
                       *ngFor="let incidentTwo of typeNotifSecond; let i = index"
                       type="button"
                       class="btn btn-info"
-                      style="margin-bottom: 5px;"
+                      style="margin-bottom: 5px"
                       (click)="onClickTypeNotifTwo($event, i)"
                       [ngClass]="
                         isTypeNotifSelected(i, 2) ? 'disable' : 'enable'
@@ -85,25 +87,29 @@
                     </button>
                   </div>
                 </div>
+                <!-- BUTTON NOTIFY-->
                 <div class="d-flex flex-column">
-                    <button
-                        type="submit"
-                        class="btn btn-success"
-                        (click)="open(mymodal)"
-                        [disabled]="hasAtLeastOne()"
-                    >
+                  <button
+                    type="submit"
+                    class="btn btn-success"
+                    (click)="open(mymodal)"
+                    [disabled]="hasAtLeastOne()"
+                  >
                     Notify alert
-                    </button>
+                  </button>
                 </div>
+                <p *ngIf="!this.isLocationActive" class="font-italic" style="color: red;">* Please activate geolocation</p>
 
                 <!-- MODAL -->
                 <ng-template #mymodal let-modal>
                   <div class="modal-header">
-                  <div class="modal-title ">
-                    <h3><span class="badge badge-primary">
-                        Please confirm the alert
-                    </span></h3> 
-                  </div>
+                    <div class="modal-title">
+                      <h3>
+                        <span class="badge badge-primary">
+                          Please confirm the alert
+                        </span>
+                      </h3>
+                    </div>
 
                     <button
                       type="button"
@@ -117,16 +123,32 @@
 
                   <div class="modal-body">
                     <div *ngIf="service.text">
-                        <h4><span class="badge font-weight-bold">What's happenning ?</span></h4> 
-                      <pem class="font-italic" style="color: blueviolet;">{{ service.text }}</pem>
+                      <h4>
+                        <span class="badge font-weight-bold"
+                          >What's happenning ?</span
+                        >
+                      </h4>
+                      <pem class="font-italic" style="color: blueviolet">{{
+                        service.text
+                      }}</pem>
                     </div>
 
                     <div *ngIf="nameTypeOneSelected" class="pt-2">
-                        <h4><span class="badge font-weight-bold">Type of alert:</span></h4>
+                      <h4>
+                        <span class="badge font-weight-bold"
+                          >Type of alert:</span
+                        >
+                      </h4>
                       <div class="d-flex">
-                        <p class="p-2 font-italic"  style="color: orangered;">{{ nameTypeOneSelected }}</p>
-                        <p class="p-2 font-italic"  style="color: blue;" *ngIf="nameTypeTwoSelected">
-                            {{ nameTypeTwoSelected }}
+                        <p class="p-2 font-italic" style="color: orangered">
+                          {{ nameTypeOneSelected }}
+                        </p>
+                        <p
+                          class="p-2 font-italic"
+                          style="color: blue"
+                          *ngIf="nameTypeTwoSelected"
+                        >
+                          {{ nameTypeTwoSelected }}
                         </p>
                       </div>
                     </div>
@@ -143,7 +165,7 @@
                     <button
                       type="button"
                       class="btn btn-outline-success"
-                      (click)="modal.dismiss('cancel button')"
+                      (click)="modal.dismiss('OK')"
                     >
                       Valid
                     </button>

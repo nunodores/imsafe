@@ -26,8 +26,12 @@ export class AlertComponent implements OnInit {
   nameTypeOneSelected: String;
   nameTypeTwoSelected: String;
   typeNotifSecond: String[];
-  checkoutForm;
-  textAlert: String;
+  checkoutForm; 
+
+  isLocationActive : boolean = false;
+  latitude : number;
+  longitude : number;
+
 
   constructor(private formBuilder: FormBuilder, private modalService: NgbModal,
     public service : VoiceRecognitionService) {
@@ -35,8 +39,7 @@ export class AlertComponent implements OnInit {
         text: '' 
       });
         
-    this.service.init();
-    this.textAlert=this.service.text
+    this.service.init(); 
     }
     recoverVoice(){ 
       this.service.isStoppedSpeechRecog ? this.service.start() : this.service.stop();
@@ -50,12 +53,24 @@ export class AlertComponent implements OnInit {
     }
   
   onSubmit(notification) {
-    // Open modal here 
-    console.log('Type: ' + this.nameTypeOneSelected);
-    console.log(this.nameTypeTwoSelected? ' - ' + this.nameTypeTwoSelected : ''); 
   }
 
-  ngOnInit(): void {}
+  
+  ngOnInit(): void {
+
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(position => {
+         console.log(position)
+         this.isLocationActive=true;
+         this.latitude = position.coords.latitude;
+         this.longitude = position.coords.longitude;
+         console.log(this.latitude)
+         console.log(this.longitude)
+      });
+
+    }
+
+  }
 
   onClickTypeNotif(event, index) {
     if (
@@ -113,23 +128,28 @@ export class AlertComponent implements OnInit {
 
 
   hasAtLeastOne(){
-    return !this.service.text && !this.nameTypeOneSelected;
+    return !this.isLocationActive || (!this.service.text && !this.nameTypeOneSelected );
   }
 
 
-
-  closeResult: string;
   open(content) {
     console.log(content)
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-
-      this.closeResult = `Closed with: ${result}`;
-      console.log(this.closeResult)
     }, (reason) => {
-
-      console.log(reason)
-
+      if(reason=="OK"){
+        this.sentAlert()
+      }
     });
 
+  }
+
+  private sentAlert(){
+    this.latitude;
+    this.longitude;
+    this.service.text;
+    this.nameTypeOneSelected;
+    this.nameTypeTwoSelected;
+    var currentDate = new Date();
+    console.log("currentDate " + currentDate)
   }
 }
