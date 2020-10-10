@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
           login: new FormControl('', [Validators.required, Validators.maxLength(50)]),
           password: new FormControl('', [Validators.required, Validators.maxLength(50)])
       })
-      this.apiService.logout();
   }
 
   public login = () => {

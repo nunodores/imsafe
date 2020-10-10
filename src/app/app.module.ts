@@ -24,6 +24,7 @@ import { AlertDetailsComponent } from './alert-details/alert-details.component';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { HttpClientModule, HttpHeaders, HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
+import { LogoutComponent } from './logout/logout.component';
 
 
 
@@ -38,7 +39,8 @@ import { JwtModule } from '@auth0/angular-jwt';
     LoginComponent,
     AlertComponent,
     VoiceRecognitionComponent,
-    AlertDetailsComponent
+    AlertDetailsComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

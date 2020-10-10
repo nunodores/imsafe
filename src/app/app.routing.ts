@@ -8,6 +8,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SignupComponent } from './signup/signup.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
 import { AlertDetailsComponent } from './alert-details/alert-details.component';
 import { AuthService } from '../service/auth.service'
 import { AlertComponent } from './alert/alert.component';
@@ -18,6 +19,7 @@ const routes: Routes =[
     { path: 'register',           component: SignupComponent },
     { path: 'landing',          component: LandingComponent, canActivate: [AuthService] },
     { path: 'login',          component: LoginComponent },
+    { path: 'logout',          component: LogoutComponent, canActivate: [AuthService] },
     { path: 'alertDetails',   component: AlertDetailsComponent, canActivate: [AuthService] },
     { path: 'alert',          component: AlertComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' }
