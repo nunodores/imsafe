@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment'
 import * as Mapboxgl from 'mapbox-gl'
 import { Observable } from 'rxjs';
 import { AlertApiService } from 'src/service/alertApi.service';
+import { FooterComponent } from '../shared/footer/footer.component';
 
 @Component({
   selector: 'app-alert-details',
@@ -12,10 +13,10 @@ import { AlertApiService } from 'src/service/alertApi.service';
 
 export class AlertDetailsComponent implements OnInit {
   mapa: Mapboxgl.Map;
+  markers :Map<string, Mapboxgl.Marker>=new Map();
   Alerts:any = [];
-
+  
   constructor(private apiService: AlertApiService) {
-    this.readAlerts();
    }
   
   ngOnInit(): void {
@@ -36,11 +37,13 @@ export class AlertDetailsComponent implements OnInit {
           // initial zoom
 
           zoom: 16
-        });
+        });  
+        this.readAlerts();
         var marker = new Mapboxgl.Marker()
           .setLngLat([position.coords.longitude, position.coords.latitude])
-          .addTo(this.mapa);
-        // Add geolocate control to the map.
+          .addTo(this.mapa); 
+
+          // Add geolocate control to the map.
         this.mapa.addControl(
           new Mapboxgl.GeolocateControl({
             positionOptions: {
@@ -58,14 +61,25 @@ export class AlertDetailsComponent implements OnInit {
   }
 
   readAlerts(){
-    this.apiService.getAlerts().subscribe((data) => {
-      console.log(data);
+    this.apiService.getAlerts().subscribe((data : Array<any>) => { 
+      
      this.Alerts = data;
+     for (let notif of this.Alerts) {
+        let myLatlng = new Mapboxgl.LngLat(notif.lon, notif.lat );
+        let marker = new Mapboxgl.Marker()
+        .setLngLat(myLatlng)
+        .setPopup(new Mapboxgl.Popup({ offset: 25 }))
+        .addTo(this.mapa); 
+        this.markers.set(notif._id, marker);
+      }
     })    
   }
  
   @Input() hover: Observable<string>
-
+  clickOnCard(alert){
+    window.scrollTo(0, 0)
+    this.mapa.setCenter(this.markers.get(alert._id).getLngLat())
+  }
 }
 
 // just an interface for type safety.
