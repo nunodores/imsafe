@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { AlertDetailsComponent } from './alert-details/alert-details.component';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { HttpClientModule, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,12 @@ import { HttpClientModule, HttpHeaders, HttpErrorResponse } from '@angular/commo
     RouterModule,
     GoogleChartsModule.forRoot(),
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: function  tokenGetter() {
+             return     localStorage.getItem('access_token');}
+      }
+    }),
     AppRoutingModule,
     HomeModule
   ],
