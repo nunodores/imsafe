@@ -1,0 +1,33 @@
+.map-container {
+    height: 500px;
+  }
+  .icons-to-animate{
+    position: relative;
+    width: 90px; height: 90px; padding: 15px;
+    transition: all .15s ease;
+    transform: translate(0%, 0%);
+
+  }
+  .icons-to-animate:hover {
+    width: 90px; height: 90px; padding: 15px;
+    transform: translate(0%,-10%)
+}
+
+.location-icon{
+  width: 40px; height: 40px;
+  transition: all .15s ease;
+  transform: translate(0%, 0%);
+  
+  
+}
+.location-icon:hover{
+  width: 40px; height: 40px;
+
+  transform: translate(0%,-20%)
+
+}
+
+#animation-card:hover{
+  background-color:  #8965e0;
+  color: white;
+}
