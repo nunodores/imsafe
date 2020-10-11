@@ -1,9 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
+import { User } from 'src/models/interfaces';
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { VoiceRecognitionService } from "../voice-recognition/service/voice-reconition.service";
 import { HttpCallsBackendService } from "./http-calls-backend.service";
 import { compilePipeFromMetadata } from "@angular/compiler";
+import { UserApiService } from 'src/service/userApi.service';
 
 @Component({
   selector: "app-alert",
@@ -34,7 +36,7 @@ export class AlertComponent implements OnInit {
   latitude: number;
   longitude: number;
 
-  constructor(
+  constructor(private userService: UserApiService,
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
     public service: VoiceRecognitionService,
@@ -154,17 +156,19 @@ export class AlertComponent implements OnInit {
       ? this.nameTypeOneSelected + " - " + this.nameTypeTwoSelected
       : this.nameTypeOneSelected;
     let currentDate = new Date();
-    let jsonBody = {
-      type: type,
-      message: this.service.text,
-      lat: this.latitude,
-      lon: this.longitude,
-      signaled_by: "", //TODO
-      start_date: currentDate,
-      end_date: currentDate,
-    };
-    this.serviceBackend.postAlert(jsonBody);
-    this.clearData();
+    this.userService.getUser(localStorage.getItem("login")).subscribe((data: User) => {
+      let jsonBody = {
+        type: type,
+        message: this.service.text,
+        lat: this.latitude,
+        lon: this.longitude,
+        signaled_by: data._id, //TODO
+        start_date: currentDate,
+        end_date: currentDate,
+      };
+      this.serviceBackend.postAlert(jsonBody);
+      this.clearData();
+    });
   }
 
   private clearData(){
