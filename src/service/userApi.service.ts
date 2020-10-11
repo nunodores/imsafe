@@ -9,20 +9,20 @@ import { User } from '../models/interfaces'
 })
 
 export class UserApiService {
-    baseUri:string = 'http://resastyle.com:9000/';
+    baseUri:string = 'http://localhost:9000/';
     //baseUri: string = 'http://localhost:9000/';
     headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     constructor(private http: HttpClient) { }
 
     register(user: User) {
-        return this.http.post<{token: string}>('http://resastyle.com:9000/users/register/', user, { headers: this.headers }).pipe(tap(res => {
+        return this.http.post<{token: string}>('http://localhost:9000/users/register/', user, { headers: this.headers }).pipe(tap(res => {
             this.login(user.login, user.password)
         }))
     }
 
     login(login: string, password: string) {
-        return this.http.post<{ token: string, _id: string }>('http://resastyle.com:9000/users/login/', { login, password }, { headers: this.headers }).pipe(tap(res => {
+        return this.http.post<{ token: string, _id: string }>('http://localhost:9000/users/login/', { login, password }, { headers: this.headers }).pipe(tap(res => {
             localStorage.setItem('access_token', res.token);
             localStorage.setItem('login', login);
         }))

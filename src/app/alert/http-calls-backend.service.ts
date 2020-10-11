@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 export class HttpCallsBackendService {
 
   constructor(private http: HttpClient) { }
-  httpDefault = "http://resastyle.com:9000/"
+  httpDefault = "http://localhost:9000/"
 
   postAlert(body){
     console.log("Before call")
