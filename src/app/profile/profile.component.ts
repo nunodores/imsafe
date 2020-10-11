@@ -251,4 +251,10 @@ export class ProfileComponent implements OnInit {
       this.selectedAlert=undefined;
     }
 
+    public deleteAlert(alert) {
+        this.alertService.deleteAlert(alert._id).subscribe(data => {
+            this.alerts = this.alerts.filter(item => item !== alert);
+        })
+    }
+
 }

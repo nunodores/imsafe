@@ -32,16 +32,13 @@ export class AlertApiService {
   // Update Alerts
   updateAlert(id, data): Observable<any> {
     let url = `${this.baseUri}alerts/${id}`;
-    return this.http.put(url, data, {headers: {'Content-Type': 'application/json; charset=UTF-8',
-        'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Z-Key'}}).pipe(
+    return this.http.put(url, data, {headers: this.headers}).pipe(
       catchError(this.errorMgmt)
     )
   }
 
   // Delete Alerts
-  deleteEmployee(id): Observable<any> {
+  deleteAlert(id): Observable<any> {
     let url = `${this.baseUri}alerts/${id}`;
     return this.http.delete(url, { headers: this.headers }).pipe(
       catchError(this.errorMgmt)
