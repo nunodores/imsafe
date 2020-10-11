@@ -25,6 +25,7 @@ import { GoogleChartsModule } from 'angular-google-charts';
 import { HttpClientModule, HttpHeaders, HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { LogoutComponent } from './logout/logout.component';
+import { MapsComponent } from './maps/maps.component';
 
 
 
@@ -40,7 +41,8 @@ import { LogoutComponent } from './logout/logout.component';
     AlertComponent,
     VoiceRecognitionComponent,
     AlertDetailsComponent,
-    LogoutComponent
+    LogoutComponent,
+    MapsComponent
   ],
   imports: [
     BrowserModule,

@@ -12,6 +12,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { AlertDetailsComponent } from './alert-details/alert-details.component';
 import { AuthService } from '../service/auth.service'
 import { AlertComponent } from './alert/alert.component';
+import { MapsComponent } from './maps/maps.component';
 
 const routes: Routes =[
     { path: 'home',             component: HomeComponent },
@@ -22,6 +23,7 @@ const routes: Routes =[
     { path: 'logout',          component: LogoutComponent, canActivate: [AuthService] },
     { path: 'alertDetails',   component: AlertDetailsComponent, canActivate: [AuthService] },
     { path: 'alert',          component: AlertComponent },
+    { path: 'maps',          component: MapsComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

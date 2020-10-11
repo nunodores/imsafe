@@ -49,6 +49,12 @@
             <span class="nav-link-inner--text">Logout</span>
           </a>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link no-caret" [routerLink]="['/maps']">
+            <i class="ni ni-ui-04 d-lg-none"></i>
+            <span class="nav-link-inner--text">Disaster Visualization</span>
+          </a>
+        </li>
       </ul>
       <ul *ngIf="!isLoggedIn" class="navbar-nav navbar-nav-hover align-items-lg-center">
         <li class="nav-item dropdown">
@@ -61,6 +67,12 @@
           <a class="nav-link no-caret" [routerLink]="['/register']">
             <i class="ni ni-ui-04 d-lg-none"></i>
             <span class="nav-link-inner--text">Register</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link no-caret" [routerLink]="['/maps']">
+            <i class="ni ni-ui-04 d-lg-none"></i>
+            <span class="nav-link-inner--text">Disaster Visualization</span>
           </a>
         </li>
       </ul>
