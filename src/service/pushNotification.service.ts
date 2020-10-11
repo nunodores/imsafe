@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 
-const SERVER_URL = 'http://localhost:9000/subscription'
+//const SERVER_URL = 'http://vps-d4f37b99.vps.ovh.net:9000/subscription'
+const SERVER_URL = 'http://resastyle:9000/subscription'
 
 @Injectable()
 export class PushNotificationService {
