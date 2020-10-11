@@ -9,8 +9,8 @@ import { User } from '../models/interfaces'
 })
 
 export class UserApiService {
-    //baseUri:string = 'http://resastyle.com:9000/';
-    baseUri: string = 'http://localhost:9000/';
+    baseUri:string = 'http://resastyle.com:9000/';
+    //baseUri: string = 'http://localhost:9000/';
     headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     constructor(private http: HttpClient) { }
