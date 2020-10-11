@@ -6,7 +6,6 @@ import { AssessmentApiService } from 'src/service/assessmentApi.service';
 import { FormBuilder } from "@angular/forms";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { VoiceRecognitionService } from "../voice-recognition/service/voice-reconition.service";
-import { compilePipeFromMetadata } from "@angular/compiler";
 
 @Component({
     selector: 'app-profile',
@@ -219,14 +218,24 @@ export class ProfileComponent implements OnInit {
 
     updateAlert() {
         let currentDate = new Date();
+        if(this.nameTypeTwoSelected != undefined && this.nameTypeOneSelected == undefined) {
+            this.nameTypeOneSelected = this.selectedAlert.type.split(" - ")[0];
+        }
+        let type = this.nameTypeTwoSelected ? this.nameTypeOneSelected + " - " + this.nameTypeTwoSelected : this.nameTypeOneSelected;
         this.alertService.updateAlert(this.selectedAlert._id, {_id: this.selectedAlert._id, 
-            type: this.nameTypeTwoSelected ? this.nameTypeOneSelected + " - " + this.nameTypeTwoSelected : this.nameTypeOneSelected,
+            message: this.checkoutForm.controls.text.value,
+            type: type,
             lat: this.latitude,
             lon: this.longitude,
-            signaled_by: this.selectedAlert._id,
+            signaled_by: this.selectedAlert.signaled_by,
             start_date: this.selectedAlert.start_date,
             end_date: currentDate}).subscribe(alert => {
-                
+                this.alerts.forEach((element, index) => {
+                    if(element._id == this.selectedAlert._id) {
+                        this.alerts = this.alerts.filter(item => item !== element);
+                        this.alerts.push(alert);
+                    }
+                });
             })
     }
 
