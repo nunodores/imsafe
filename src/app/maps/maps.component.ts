@@ -9,6 +9,10 @@ export class MapsComponent implements OnInit {
 
   constructor() { }
 
+  // ngOnInit(): void {
+    
+  // }
+
   ngOnInit(): void {
     
     // TO MAKE THE MAP APPEAR YOU MUST
