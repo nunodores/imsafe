@@ -10,7 +10,7 @@ import { Assessment } from '../models/interfaces'
 
 export class AssessmentApiService {
   baseUri:string = 'http://resastyle.com:9000/';
-  //baseUri:string = 'http://vps-d4f37b99.vps.ovh.net:9000/';
+  //baseUri:string = 'http://localhost:9000/';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private http: HttpClient) { }
