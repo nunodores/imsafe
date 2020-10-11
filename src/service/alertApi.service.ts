@@ -18,7 +18,7 @@ export class AlertApiService {
   // Create Alerts
   createAlert(data): Observable<any> {
     let url = `${this.baseUri}alerts/`;
-    return this.http.post(url, data)
+    return this.http.post(url, data, { headers: this.headers })
       .pipe(
         catchError(this.errorMgmt)
       )
@@ -26,7 +26,7 @@ export class AlertApiService {
 
   // Get all Alerts
   getAlerts() {
-    return this.http.get(`${this.baseUri}alerts/`);
+    return this.http.get(`${this.baseUri}alerts/`, { headers: this.headers });
   }
 
   // Update Alerts

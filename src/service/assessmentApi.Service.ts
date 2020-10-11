@@ -26,7 +26,9 @@ export class AssessmentApiService {
 
   // Get an Assessment by the alert id
   getAssessmentByAlertId(id: string): Observable<Assessment[]> {
-    return this.http.get<Assessment[]>(`${this.baseUri}assessments/${id}`);
+    return this.http.get<Assessment[]>(`${this.baseUri}assessments/${id}`, { headers: this.headers }).pipe(
+        catchError(this.errorMgmt)
+      );
   }
 
   // Update Assessments

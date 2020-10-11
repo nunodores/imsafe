@@ -34,6 +34,7 @@
                       <div style="display: grid;">
                         <span class="mr-auto p-2">{{alert.message}}</span>
                         <span class="mr-auto p-2">{{alert.type}}</span>
+                        <span class="mr-auto p-2">Reliability Score: {{alert.reliabilityScore}}</span>
                         <span class="mr-auto p-2" style="opacity: 0.4; font-style: italic;">Send {{alert.last_update}}s
                           ago</span>
 
@@ -61,12 +62,12 @@
             </div>
             <div class="col-md-auto"
               style="display:flex; align-items: center; flex-direction: row;  flex-wrap: wrap; position: relative; justify-content: center;">
-              <a href="javascript:void(0)">
+              <a href="javascript:void(0)" (click)="assessAlert(alert, 'true')" [class.disabled]="buttonClicked">
 
                 <img src="../../assets/img/icons/common/like.png" class="icons-to-animate" />
               </a>
 
-              <a href="javascript:void(0)">
+              <a href="javascript:void(0)" (click)="assessAlert(alert, 'false')" [class.disabled]="buttonClicked">
 
                 <img src="../../assets/img/icons/common/dislike.png" class="icons-to-animate" />
               </a>

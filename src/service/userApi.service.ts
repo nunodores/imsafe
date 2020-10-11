@@ -16,13 +16,13 @@ export class UserApiService {
     constructor(private http: HttpClient) { }
 
     register(user: User) {
-        return this.http.post<{token: string}>('http://resastyle.com:9000/users/register/', user).pipe(tap(res => {
+        return this.http.post<{token: string}>('http://resastyle.com:9000/users/register/', user, { headers: this.headers }).pipe(tap(res => {
             this.login(user.login, user.password)
         }))
     }
 
     login(login: string, password: string) {
-        return this.http.post<{ token: string, _id: string }>('http://resastyle.com:9000/users/login/', { login, password }).pipe(tap(res => {
+        return this.http.post<{ token: string, _id: string }>('http://resastyle.com:9000/users/login/', { login, password }, { headers: this.headers }).pipe(tap(res => {
             localStorage.setItem('access_token', res.token);
             localStorage.setItem('login', login);
         }))
@@ -41,7 +41,7 @@ export class UserApiService {
     // get a user by login
     getUser(login: string): Observable<User> {
         let url = `${this.baseUri}users/${login}`;
-        return this.http.get<User>(url);
+        return this.http.get<User>(url, { headers: this.headers });
     }
 
     // Error handling 
