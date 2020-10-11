@@ -4,8 +4,19 @@
 
 export const environment = {
   production: false,
-  mapbox:{
+  mapbox: {
     accessToken: 'pk.eyJ1IjoibnVub2RvcmVzIiwiYSI6ImNrZzJ2cHhjdzA0MjkycWw2bnRneXI5cDcifQ.HCQ3a5lNv6EOQnP7Xx7Rig'
+  },
+  firebase:
+  {
+    apiKey: "AIzaSyC533lMxFNsljK1RZ-taIcR0Q3bQ3mjtDM",
+    authDomain: "imsafe-292023.firebaseapp.com",
+    databaseURL: "https://imsafe-292023.firebaseio.com",
+    projectId: "imsafe-292023",
+    storageBucket: "imsafe-292023.appspot.com",
+    messagingSenderId: "481852178401",
+    appId: "1:481852178401:web:a534a51801df6bf21f5ca0",
+    measurementId: "G-YQR466LBVK"
   }
 };
 

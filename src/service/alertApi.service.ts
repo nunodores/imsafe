@@ -10,7 +10,7 @@ import { Alert } from '../models/interfaces'
 
 export class AlertApiService {
   //baseUri:string = 'http://resastyle.com:9000/';
-  baseUri:string = 'http://localhost:9000/';
+  baseUri: string = 'http://localhost:9000/';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private http: HttpClient) { }
@@ -29,13 +29,30 @@ export class AlertApiService {
     return this.http.get(`${this.baseUri}alerts/`);
   }
 
+  //notif
+  sendNotification() {
+    let body ={
+        notification: {
+          title: "Hey there",
+          body: "Subscribe to might ghost hack youtube channel"
+        },
+        to: "erZqLQrji0-lIrURMMaEcp:APA91bFSfx614W0ke7Df6jMZjsSs-Hg3jvjLcwFtyFfPkfxwf8MXhwV69jw9SnwGvuRB7gqu6S5MMgj0vGiGgdESCCr9mvRTbQCCjj6CeLfgzZzLXlfMklh41WOz4DWILswCGSlx-ZRt"
+      }
+
+    this.http.post<any>("https://fcm.googleapis.com/fcm/send", body).subscribe(data => {
+    })
+  }
   // Update Alerts
   updateAlert(id, data): Observable<any> {
     let url = `${this.baseUri}alerts/${id}`;
-    return this.http.put(url, data, {headers: {'Content-Type': 'application/json; charset=UTF-8',
+    return this.http.put(url, data, {
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
         'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Z-Key'}}).pipe(
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Z-Key'
+      }
+    }).pipe(
       catchError(this.errorMgmt)
     )
   }
@@ -50,8 +67,8 @@ export class AlertApiService {
 
   // get an array of alerts by id
   getAlertsFromSpecificUser(id: string): Observable<Alert[]> {
-      let url = `${this.baseUri}alerts/user_alerts/${id}`;
-      return this.http.get<Alert[]>(url);
+    let url = `${this.baseUri}alerts/user_alerts/${id}`;
+    return this.http.get<Alert[]>(url);
   }
 
   // Error handling 

@@ -4,6 +4,10 @@ import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { VoiceRecognitionService } from "../voice-recognition/service/voice-reconition.service";
 import { HttpCallsBackendService } from "./http-calls-backend.service";
 import { compilePipeFromMetadata } from "@angular/compiler";
+import { SwPush } from '@angular/service-worker'
+import { PushNotificationService } from "src/service/pushNotification.service";
+import { MessagingService } from "src/service/messaging.service";
+import { AlertApiService } from "src/service/alertApi.service";
 
 @Component({
   selector: "app-alert",
@@ -11,11 +15,14 @@ import { compilePipeFromMetadata } from "@angular/compiler";
   styleUrls: ["./alert.component.css"],
 })
 export class AlertComponent implements OnInit {
+  title = "push-notification";
+  message;
   typeNotif: String[] = ["Aggression", "Disaster", "Accident"];
   icons: String[][] = [
     ["fa fa-hand-rock-o", "fa fa-fire-extinguisher", "fa fa-car"],
     [],
   ];
+  readonly VAPID_PUBLIC_KEY = "BKMQHADj8zpaNqvzjzYnVZ63zMPabEjt_mfvOPn5CABp0_WrzRDq2yZo7mXBFY_flQg7gi9VTOY6QJmxIojOKs4";
 
   agressions: String[] = ["Robbery", "Sexual", "Fight"];
 
@@ -38,18 +45,38 @@ export class AlertComponent implements OnInit {
     private formBuilder: FormBuilder,
     private modalService: NgbModal,
     public service: VoiceRecognitionService,
-    private serviceBackend : HttpCallsBackendService
+    private serviceBackend: HttpCallsBackendService,
+    private messagingService: MessagingService,
+    private alertApiService:AlertApiService,
+    private swPush: SwPush, pushService: PushNotificationService
   ) {
     this.checkoutForm = this.formBuilder.group({
       text: "",
     });
-
+ 
     this.service.init();
+    if (swPush.isEnabled) {
+      swPush
+        .requestSubscription({
+          serverPublicKey: this.VAPID_PUBLIC_KEY,
+        })
+        .then(subscription => {
+          pushService.sendSubscriptionToTheServer(subscription).subscribe()
+        })
+        .catch(console.error)
+    }
   }
+
+
+
   recoverVoice() {
     this.service.isStoppedSpeechRecog
       ? this.service.start()
       : this.service.stop();
+  }
+
+  sendNotif(){
+    this.alertApiService.sendNotification();
   }
   startService() {
     this.service.start();
@@ -59,7 +86,7 @@ export class AlertComponent implements OnInit {
     this.service.stop();
   }
 
-  onSubmit(notification) {}
+  onSubmit(notification) { }
 
   ngOnInit(): void {
     if ("geolocation" in navigator) {
@@ -72,6 +99,10 @@ export class AlertComponent implements OnInit {
         console.log(this.longitude);
       });
     }
+
+    this.messagingService.requestPermission()
+    this.messagingService.receiveMessage()
+    this.message = this.messagingService.currentMessage
   }
 
   onClickTypeNotif(event, index) {
@@ -139,7 +170,7 @@ export class AlertComponent implements OnInit {
     this.modalService
       .open(content, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
-        (result) => {},
+        (result) => { },
         (reason) => {
           if (reason == "OK") {
             this.sentAlert();
@@ -147,7 +178,7 @@ export class AlertComponent implements OnInit {
         }
       );
   }
- 
+
 
   private sentAlert() {
     let type = this.nameTypeTwoSelected
@@ -167,14 +198,14 @@ export class AlertComponent implements OnInit {
     this.clearData();
   }
 
-  private clearData(){
-    this.typeNotifSelected=undefined;
-    this.typeNotifSelectedTwo=undefined;
-    this.latitude=undefined;
-    this.longitude=undefined;
-    this.service.text=undefined;
-    this.nameTypeOneSelected=undefined;
-    this.nameTypeTwoSelected=undefined;
-    this.typeNotifSecond=undefined;
+  private clearData() {
+    this.typeNotifSelected = undefined;
+    this.typeNotifSelectedTwo = undefined;
+    this.latitude = undefined;
+    this.longitude = undefined;
+    this.service.text = undefined;
+    this.nameTypeOneSelected = undefined;
+    this.nameTypeTwoSelected = undefined;
+    this.typeNotifSecond = undefined;
   }
 }

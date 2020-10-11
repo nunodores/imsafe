@@ -25,7 +25,15 @@ import { GoogleChartsModule } from 'angular-google-charts';
 import { HttpClientModule, HttpHeaders, HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { LogoutComponent } from './logout/logout.component';
-
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { PushNotificationService } from 'src/service/pushNotification.service';
+import { environment } from 'src/environments/environment';
+import { AngularFireMessagingModule } from "@angular/fire/messaging";
+import { AngularFireDatabaseModule } from "@angular/fire/database";
+import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AngularFireModule } from "@angular/fire";
+import { AsyncPipe } from "../../node_modules/@angular/common";
+import { MessagingService } from 'src/service/messaging.service';
 
 
 @NgModule({
@@ -49,8 +57,14 @@ import { LogoutComponent } from './logout/logout.component';
     ReactiveFormsModule,
     RouterModule,
     GoogleChartsModule.forRoot(),
-    HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),    HttpClientModule,
     ReactiveFormsModule,
+    AngularFireDatabaseModule,
+      AngularFireAuthModule,
+      AngularFireMessagingModule,
+      AngularFireModule.initializeApp(environment.firebase),
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() {
@@ -62,7 +76,7 @@ import { LogoutComponent } from './logout/logout.component';
     HttpClientModule,
     HttpModule
   ],
-  providers: [HttpClientModule],
+  providers: [HttpClientModule,PushNotificationService,MessagingService,AsyncPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

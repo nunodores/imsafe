@@ -17,13 +17,13 @@
 -->
 <!doctype html>
 <html lang="en">
+
 <head>
   <base href="/">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Start your development with a Design System for Bootstrap 4.">
-  <meta name="author" content="Creative Tim">
-  <title>Argon Design System - Free Design System for Bootstrap 4</title>
+    <link rel="manifest" href="./manifest.json">
+  <title>IM SAFE</title>
   <!-- Favicon -->
   <link href="./assets/img/brand/favicon0.png" rel="icon" type="image/png">
   <!-- Fonts -->
@@ -32,8 +32,44 @@
   <link href="./assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
   <link href="./assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+  <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+  <script>
+    
+    addEventListener('load', async () => {
+      console.log("load")
+
+      let sw = await navigator.serviceWorker.register('/assets/js/sw.js')
+      console.log(sw)
+    }
+    );
+    async function subscribe() {
+    
+    console.log("SUBSCRIBE")
+    let sw = await navigator.serviceWorker.ready;
+    let push = await sw.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: 'BKMQHADj8zpaNqvzjzYnVZ63zMPabEjt_mfvOPn5CABp0_WrzRDq2yZo7mXBFY_flQg7gi9VTOY6QJmxIojOKs4'
+    });
+    console.log("JSON "+JSON.stringify(push));
+  }
+
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('51cb8b12ead3dd9b369e', {
+      cluster: 'eu'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function (data) {
+      alert(JSON.stringify(data));
+    });
+  </script>
 </head>
+
 <body>
   <app-root></app-root>
 </body>
+
 </html>
