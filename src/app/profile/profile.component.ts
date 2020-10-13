@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User, Alert, Assessment } from 'src/models/interfaces';
 import { UserApiService } from 'src/service/userApi.service';
 import { AlertApiService } from 'src/service/alertApi.service';
-import { AssessmentApiService } from 'src/service/assessmentApi.service';
+import { AssessmentApiService } from '../../service/assessmentApi.Service';
 import { FormBuilder } from "@angular/forms";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { VoiceRecognitionService } from "../voice-recognition/service/voice-reconition.service";
