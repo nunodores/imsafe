@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as Mapboxgl from 'mapbox-gl'
 
 @Component({
   selector: 'app-maps',
@@ -18,8 +19,8 @@ export class MapsComponent implements OnInit {
     // TO MAKE THE MAP APPEAR YOU MUST
     // ADD YOUR ACCESS TOKEN FROM
     // https://account.mapbox.com
-    mapboxgl.accessToken = 'pk.eyJ1IjoicmFmcmFmcmFmIiwiYSI6ImNrZzRrc3E1czBsbXkyd216NWFpNmF2enEifQ.kCRVDdoOz2-e6O4IsaQEoA';
-    var map = new mapboxgl.Map({
+    Mapboxgl.accessToken = 'pk.eyJ1IjoicmFmcmFmcmFmIiwiYSI6ImNrZzRrc3E1czBsbXkyd216NWFpNmF2enEifQ.kCRVDdoOz2-e6O4IsaQEoA';
+    var map = new Mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/dark-v10',
     center: [-120, 50],
