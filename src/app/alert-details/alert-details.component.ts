@@ -4,7 +4,7 @@ import * as Mapboxgl from 'mapbox-gl'
 import { Observable } from 'rxjs';
 import { AlertApiService } from 'src/service/alertApi.service';
 import { UserApiService } from 'src/service/userApi.service';
-import { AssessmentApiService } from '../../service/assessmentApi.service'
+import { AssessmentApiService } from '../../service/assessmentApi.Service'
 import { FooterComponent } from '../shared/footer/footer.component';
 import { Alert, User, Assessment } from '../../models/interfaces';
 
