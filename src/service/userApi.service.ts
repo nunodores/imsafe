@@ -16,13 +16,13 @@ export class UserApiService {
     constructor(private http: HttpClient) { }
 
     register(user: User) {
-        return this.http.post<{token: string}>('http://localhost:9000/users/register/', user, { headers: this.headers }).pipe(tap(res => {
+        return this.http.post<{token: string}>(`${this.baseUri}users/register/`, user, { headers: this.headers }).pipe(tap(res => {
             this.login(user.login, user.password)
         }))
     }
 
     login(login: string, password: string) {
-        return this.http.post<{ token: string, _id: string }>('http://localhost:9000/users/login/', { login, password }, { headers: this.headers }).pipe(tap(res => {
+        return this.http.post<{ token: string, _id: string }>(`${this.baseUri}users/login/`, { login, password }, { headers: this.headers }).pipe(tap(res => {
             localStorage.setItem('access_token', res.token);
             localStorage.setItem('login', login);
         }))
